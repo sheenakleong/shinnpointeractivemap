@@ -3,7 +3,7 @@
 
 @import; "{{ sass }}";
 
-@import; compass
+@import compass
 
 $font-stack-safe: Helvetica, sans-serif
 $font-stack-main: "Roboto", $font-stack-safe
@@ -39,7 +39,7 @@ body
   
 div, img, footer
   position: relative
- 
+  include box-sizing(border-box)
 
 h1, h2, h3, h4, h5, h6
   margin-bottom: 20px
@@ -75,6 +75,7 @@ strong
   color: $color-foreground
     
 a
+  include transition(color $transition-time ease-in-out)
   font-family: $font-stack-highlight
   text-transform: uppercase
   text-decoration: none
@@ -90,19 +91,19 @@ a
   position: absolute
   top: 50%
   left: 50%
- 
+  include translate(-50%, -50%)
 
 .centered-y
   position: absolute
   width: 100%
   top: 50%
-  
+  include translateY(-50%)
   
 .distribution-map
   position: relative
   width: 100%
   padding: 20px
- 
+  include box-sizing(border-box)
   margin: 0 auto
   >img
     width: 100%
@@ -116,27 +117,33 @@ a
     position: absolute
     width: $map-dot-size
     height: $map-dot-size
-    
+    include border-radius($map-dot-size/2)
+    include opacity(0.8)
+    include translate(-50%, -50%)
+    include transition(opacity $transition-time ease-in-out $transition-time, width $transition-time ease-in-out $transition-time, height $transition-time ease-in-out $transition-time, z-index $transition-time ease-in-out $transition-time)
+    background: transparentize($color-background, 0.15)
     border: $map-dot-size/8 solid $color-highlight-dark
     .content
-     
+      include opacity(0)
+      include transition(opacity $transition-time ease-in-out)
       width: 100%
       height: 100%
       left: 50%
-     
+      include translateX(-50%)
       overflow: overlay
     &:active, &:focus
       //Deal with Firefox :active styling
       margin: 0
       padding: 0
-     
+      include opacity(1)
       width: 300px
       height: 220px
       color: $color-foreground
       z-index: 1
-    
+      include transition(opacity $transition-time ease-in-out, width $transition-time ease-in-out, height $transition-time ease-in-out)
       .content
-     
+        include opacity(1)
+        include transition(opacity $transition-time ease-in-out $transition-time, height 0 ease-in-out $transition-time, overflow 0 ease-in-out $transition-time)
         overflow: hidden
         a:hover, a:active
           color: $color-highlight
